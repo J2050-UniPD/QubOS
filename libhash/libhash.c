@@ -34,7 +34,7 @@ void next(RopeIt *i) {
   if (i->rope == NULL) {
     perror("corda invalida");
     EXIT_FAILURE;
-  } else if (i->idx < i->rope->len) {
+  } else if (i->idx < i->rope->len - 1) {
     i->idx++;
   } else {
     i->idx = 0;
@@ -58,8 +58,7 @@ uint16_t sysv(uint32_t somma) {
 }
 
 void test(char *line) {
-  char *unipdcstr =
-      "##UNIPD_SIGNATURE_RSA#VNNAJSFBAJKCSANDJVNDCODBCASUOBDUBDOVBHFDB##";
+  char *unipdcstr = "##UNIPD_SIGNATURE_RSA#VNNAJSFBAJKCSANDJVNDCODBCASUOBDUBDOVBHFDB##";
   Rope unipd = {.str = unipdcstr, .len = strlen(unipdcstr), .next = NULL};
   Rope str = {.str = line, .len = strlen(line), .next = &unipd};
 
