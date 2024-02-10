@@ -5,4 +5,5 @@ add_executable(
   Rope.c
   libhash.c
   secrets.c
+  main.c
 )
