@@ -28,3 +28,10 @@ bool verifyMessage(uint16_t digest, char *msg) {
   Rope msg_rope = newRope(msg, &unipd);
   return digest == sysv(djb2(&msg_rope));
 }
+
+bool verify(char * buffer){
+  static uint16_t digest;
+  static char content[256];
+  sscanf(buffer,"%x %255[^\n ]",&digest,content);
+  return verifyMessage(digest, content);
+}
