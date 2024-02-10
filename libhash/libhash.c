@@ -30,8 +30,7 @@ uint16_t sysv(uint32_t somma) {
 }
 
 void test(char *line) {
-  char *unipdcstr = "##UNIPD_SIGNATURE_RSA#VNNAJSFBAJKCSANDJVNDCODBCASUOBDUBDOVBHFDB##";
-  Rope unipd = newRope(unipdcstr, NULL);
+  Rope unipd = newRope(getUnipdSig(), NULL);
   Rope str = newRope(line, &unipd);
 
   printf("\n> ");
