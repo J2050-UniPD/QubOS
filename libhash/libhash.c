@@ -32,6 +32,6 @@ bool verifyMessage(uint16_t digest, char *msg) {
 bool verify(char * buffer){
   static uint16_t digest;
   static char content[256];
-  sscanf(buffer,"%x %255[^\n ]",&digest,content);
+  sscanf(buffer,"%4x %255[^\n]",&digest,content);
   return verifyMessage(digest, content);
 }
