@@ -1,3 +1,4 @@
+#include "libcrypt.h"
 #include "protocol.h"
 #include <stdio.h>
 #include <string.h>
@@ -5,10 +6,6 @@
 size_t mod(int num, size_t div) {
   return num < 0 ? ((-num * div + num) % div) : (num % div);
 }
-
-#define ALPHALEN 63
-const char alphabet[ALPHALEN] =
-    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUvWXYZ0123456789 ";
 
 size_t indexOf(char c) {
   if ('a' <= c && c <= 'z') {
@@ -22,9 +19,10 @@ size_t indexOf(char c) {
   }
 }
 
-enum Mode { ENCRYPT = 1, DECRYPT = -1 };
-
+#define ALPHALEN 63
 void vigener(Message *msg, char *key, enum Mode mode) {
+  static const char alphabet[ALPHALEN] =
+      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ";
   size_t keylen = strlen(key), idx, offset;
   for (size_t i = 0; i < MSGLEN && msg->message[i] != '\0'; i++) {
     idx = indexOf(msg->message[i]);
