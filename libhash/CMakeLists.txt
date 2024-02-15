@@ -4,6 +4,7 @@ add_executable(
   J2050_COMMS_TESTING 
   Rope.c
   libhash.c
+  libcrypt.c
   secrets.c
   main.c
 )
