@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "Rope.h"
+#include <Rope.h>
 
 Rope newRope(char *str, Rope *next) {
   Rope tmp = {.str = str, .len = strlen(str), .next = next};

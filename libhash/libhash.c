@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "Rope.h"
+#include <Rope.h>
 
 char *getUnipdSig();
 

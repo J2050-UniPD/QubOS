@@ -1,5 +1,5 @@
-#include "libcrypt.h"
-#include "protocol.h"
+#include <libcrypt.h>
+#include <protocol.h>
 #include <stdio.h>
 #include <string.h>
 
