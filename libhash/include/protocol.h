@@ -1,7 +1,8 @@
 #ifndef PROTOCOL
 #define PROTOCOL
 
-#define MSGLEN 256
+#define MSGLEN 256 // full message
+#define CNTLEN 242 // full message - 4 hashcode chars - 1 space - 8 timestamp chars - 1 space
 
 typedef struct Packet Packet;
 typedef struct Message Message;
@@ -9,7 +10,7 @@ typedef struct Message Message;
 struct Packet {
   unsigned short hashcode;
   unsigned int timestamp;
-  char content[MSGLEN - (sizeof(int) * 2) - (sizeof(short) * 2)];
+  char content[CNTLEN];
 };
 
 struct Message {

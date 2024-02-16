@@ -4,12 +4,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "Rope.h"
+#include <Rope.h>
+#include <protocol.h>
+#include <libcrypt.h>
+#include <libhash.h>
 
 char *getUnipdSig();
-uint32_t djb2(Rope *str);
-uint16_t sysv(uint32_t somma);
-bool verifyMessage(uint16_t digest, char *msg);
 
 void print_rope(Rope *rope) {
   for (RopeIterator i = begin(rope); hasNext(&i); next(&i)) {
@@ -28,9 +28,8 @@ void test(char *line) {
   printf("\n");
 }
 
-int main() {
-  bool a[] = {verifyMessage(0x2c29, "ciao mamma"),
-              verifyMessage(0x60d9, "andakjsnfkedjnfskdgjnsdfks"),
+void test_verifyMessage() {
+  bool a[] = {verifyMessage(0x60d9, "andakjsnfkedjnfskdgjnsdfks"),
               verifyMessage(0x6940, "AAAAAAAAAAAAAAAAAAAAaa"),
               verifyMessage(0xff08, "eeeeeeeeee"),
               verifyMessage(0x879a, "eeeeeeeeef"),
@@ -38,8 +37,119 @@ int main() {
               verifyMessage(0x4450, "eeefeeeeed"),
               verifyMessage(0xb9c0, "eeedeeeeef")};
 
-  for (int i = 0; i < 8; i++){
+  for (int i = 0; i < 8; i++) {
     printf("%d\n", a[i]);
   }
+}
+
+void test_verify() {
+  bool a[] = {verify("60d9 andakjsnfkedjnfskdgjnsdfks"),
+              verify("6940 AAAAAAAAAAAAAAAAAAAAaa"),
+              verify("ff08 eeeeeeeeee"),
+              verify("879a eeeeeeeeef"),
+              verify("cce1 eeefeeeeee"),
+              verify("4450 eeefeeeeed"),
+              verify("b9c0 eeedeeeeef")};
+
+  for (int i = 0; i < 8; i++) {
+    printf("%d '%s' \n", a[i]);
+  }
+}
+
+typedef struct tup tup;
+struct tup {
+  char *msg;
+  uint16_t digest;
+  bool v;
+  bool v2;
+};
+
+#define len 8
+void fast_test() {
+  tup a[len] = {
+      {.v = 0, .v2 = 0, .digest = 0x60d9, .msg = "andakjsnfkedjnfskdgjnsdfks"},
+      {.v = 0, .v2 = 0, .digest = 0x6940, .msg = "AAAAAAAAAAAAAAAAAAAAaa"},
+      {.v = 0, .v2 = 0, .digest = 0xff08, .msg = "eeeeeeeeee"},
+      {.v = 0, .v2 = 0, .digest = 0x879a, .msg = "eeeeeeeeef"},
+      {.v = 0, .v2 = 0, .digest = 0xcce1, .msg = "eeefeeeeee"},
+      {.v = 0, .v2 = 0, .digest = 0x4450, .msg = "eeefeeeeed"},
+      {.v = 0, .v2 = 0, .digest = 0xb9c0, .msg = "eeedeeeeef"},
+      {.v = 0, .v2 = 0, .digest = 0xd8e1, .msg = "a b c d e"},
+  };
+  for (int i = 0; i < len; i++) {
+    printf("'%s'\n", a[i].msg);
+
+#define UNIPD
+#ifdef UNIPD
+    Rope unipd = newRope(getUnipdSig(), NULL);
+    Rope str = newRope(a[i].msg, &unipd);
+#else
+    Rope str = newRope(a[i].msg, NULL);
+#endif
+
+    uint16_t calc_digest = sysv(djb2(&str));
+    printf("digest: '%8x' '%8x' \n", calc_digest, a[i].digest);
+
+    char buff[256];
+    sprintf(buff, "%4x %s", calc_digest, a[i].msg);
+    printf("'%s'\n", buff);
+    uint16_t extracted_digest;
+    char extracted_str[256];
+    sscanf(buff, "%4x %255[^\n]s", &extracted_digest, extracted_str);
+    printf("'%4x' '%s'\n", extracted_digest, extracted_str);
+    printf("verify msg : %d\n", verifyMessage(extracted_digest, extracted_str));
+    printf("verify : %d\n", verify(buff));
+    printf("\n\n");
+  }
+}
+
+#undef len
+
+void vigener_test() {
+  // Message msg = {.message = "ciao XYZ01 abcdevwxyz"};
+  // char key[256] = "passwordsupersegreta";
+
+  Message msg;
+  char key[256] = "passwordsupersegreta";
+  scanf("%255[a-zA-Z0-9 ]s|", msg.message);
+  printf("password : '%s'\n\n", key);
+
+  printf("msg      : '%s'\n", msg.message);
+  vigener(&msg, key, ENCRYPT);
+  printf("encrypt  : '%s'\n", msg.message);
+  vigener(&msg, key, DECRYPT);
+  printf("decrypt  : '%s'\n", msg.message);
+
+  EXIT_SUCCESS;
+}
+
+int main(int argc, char **argv) {
+  vigener_test();
+  return 0;
+  fast_test();
+  return 0;
+  char msg[256];
+
+  if (argc >= 2 && strcmp(argv[1], "-s") == 0) {
+    printf("Type message to be prepared: ");
+    scanf("%255[^\n]", msg);
+    Rope unipdsig = newRope(getUnipdSig(), NULL);
+    Rope str = newRope(msg, &unipdsig);
+    uint16_t digest = sysv(djb2(&str));
+    printf("'%4x %s'\n", digest, msg);
+  }
+
+  if (argc >= 2 && strcmp(argv[1], "-r") == 0) {
+    printf("Type message to be verified: ");
+    scanf("%255[^\n]", msg);
+    printf("'%s'\n", msg);
+    bool a = verify(msg);
+    if (a) {
+      printf("Messaggio accettato\n");
+    } else {
+      printf("Messaggio rifiutato\n");
+    }
+  }
+
   return 0;
 }
