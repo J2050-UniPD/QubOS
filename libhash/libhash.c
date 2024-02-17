@@ -1,37 +1,35 @@
-#include <stdbool.h>
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <protocol.h>
 
-#include <Rope.h>
+typedef union {
+  struct {
+    uint u16l : 16;
+    uint u16m : 16;
+  };
+  uint u32i : 32;
+} SysvNumber;
 
-char *getUnipdSig();
-
-uint32_t djb2(Rope *str) {
-  uint32_t digest = 5381;
-  for (RopeIterator i = begin(str); hasNext(&i); next(&i)) {
-    digest = ((digest << 5) + digest) + get(&i); // digest * 33 + get(&i);
+SysvNumber djb2(Rope *str) {
+  SysvNumber digest = { .u32i = 5381};
+  for (RopeIterator i = RopeIt_begin(str); RopeIt_hasNext(&i); RopeIt_next(&i)) {
+    digest.u32i = (digest.u32i * 33) + RopeIt_get(&i);
   }
   return digest;
 }
 
-uint16_t sysv(uint32_t somma) {
-  uint32_t dueSedici = 65536;         // 2 ** 16
-  uint64_t dueTrentadue = 4294967296; // 2 ** 32
-  uint16_t digest = (somma % dueSedici) + ((somma % dueTrentadue) / dueSedici);
-  return (digest % dueSedici) + (digest / dueSedici);
+SysvNumber sysv(SysvNumber digest) {
+  digest.u16l += digest.u16m;
+  digest.u16l += digest.u16m;
+  return digest;
 }
 
-bool verifyMessage(uint16_t digest, char *msg) {
-  Rope unipd = newRope(getUnipdSig(), NULL);
-  Rope msg_rope = newRope(msg, &unipd);
-  return digest == sysv(djb2(&msg_rope));
+void hash(Packet *pkg, const TextBuffer *sig) {
+  Rope sigRope = {.str = sig, .next = (Rope *)0};
+  Rope strRope = {.str = &(pkg->content), .next = &sigRope};
+  pkg->hashcode = sysv(djb2(&strRope)).u16l;
 }
 
-bool verify(char * buffer){
-  static uint16_t digest;
-  static char content[256];
-  sscanf(buffer,"%4x %255[^\n]",&digest,content);
-  return verifyMessage(digest, content);
+int validate(const Packet *pkg, const TextBuffer *sig) {
+  Rope sigRope = {.str = sig, .next = (Rope *)0};
+  Rope strRope = {.str = &(pkg->content), .next = &sigRope};
+  return pkg->hashcode == sysv(djb2(&strRope)).u16l;
 }
