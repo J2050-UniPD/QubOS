@@ -1,17 +1,14 @@
-#include <stdint.h>
-
 #ifndef PROTOCOL
 #define PROTOCOL
 
 typedef unsigned int uint;
 
-#define TXTLEN 256 // full message
-#define CNTLEN                                                                 \
-  242 // full message - 4 hashcode - 1 space - 8 timestamp - 1 space
+#define TXTLEN 256 // Max size of a message sent from ground
+#define CNTLEN 242 // message - 4 hashcode - 1 space - 8 timestamp - 1 space
 
 typedef struct {
-  uint16_t hashcode : 16;
-  uint32_t timestamp : 32;
+  uint hashcode : 16;
+  uint timestamp : 32;
   char content[CNTLEN];
 } Packet;
 
@@ -28,7 +25,7 @@ struct Rope {
 
 typedef struct {
   Rope *rope;
-  uint8_t idx : 8;
+  uint idx;
 } RopeIterator;
 
 Rope newRope(TextBuffer *str, Rope *next);
