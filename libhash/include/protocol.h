@@ -28,10 +28,10 @@ typedef struct {
 } RopeIterator;
 
 Rope newRope(TextBuffer *str, Rope *next);
-RopeIterator RopeIt_begin(Rope *rope);
-char RopeIt_get(RopeIterator *i);
-int RopeIt_hasNext(RopeIterator *i);
-int RopeIt_next(RopeIterator *i);
+RopeIterator RopeIterator_begin(Rope *rope);
+char         RopeIterator_get(RopeIterator *i);
+int          RopeIterator_hasNext(RopeIterator *i);
+int          RopeIterator_next(RopeIterator *i);
 
 // Encryption
 enum Mode { ENCRYPT = 1, DECRYPT = -1 };

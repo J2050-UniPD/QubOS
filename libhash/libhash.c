@@ -10,8 +10,8 @@ typedef union {
 
 SysvNumber djb2(Rope *str) {
   SysvNumber digest = { .u32b = 5381};
-  for (RopeIterator i = RopeIt_begin(str); RopeIt_hasNext(&i); RopeIt_next(&i)) {
-    digest.u32b = (digest.u32b * 33) + RopeIt_get(&i);
+  for (RopeIterator i = RopeIterator_begin(str); RopeIterator_hasNext(&i); RopeIterator_next(&i)) {
+    digest.u32b = (digest.u32b * 33) + RopeIterator_get(&i);
   }
   return digest;
 }

@@ -7,8 +7,8 @@
 #include <protocol.h>
 
 void print_rope(Rope *rope) {
-  for (RopeIterator i = RopeIt_begin(rope); RopeIt_hasNext(&i); RopeIt_next(&i)) {
-    printf("%c", RopeIt_get(&i));
+  for (RopeIterator i = RopeIterator_begin(rope); RopeIterator_hasNext(&i); (void)RopeIterator_next(&i)) {
+    printf("%c", RopeIterator_get(&i));
   }
 }
 
@@ -22,6 +22,7 @@ void print_packet(Packet * pkg){
   printf(" }");
 }
 
+/*
 void test(char *line) {
   Rope unipd = newRope(getUnipdSig(), NULL);
   Rope str = newRope(line, &unipd);
@@ -127,6 +128,7 @@ void vigener_test() {
 
   EXIT_SUCCESS;
 }
+*/
 
 int main(int argc, char **argv) {
 

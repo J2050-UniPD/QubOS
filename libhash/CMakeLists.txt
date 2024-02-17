@@ -3,9 +3,10 @@ project(J2050_COMMS)
 include_directories(include/)
 add_executable(
   J2050_COMMS_TESTING 
-  Rope.c
-  libhash.c
   libcrypt.c
-  secrets.c
+  libhash.c
   main.c
+  protocol.c
+  Rope.c
+  secrets.c
 )
