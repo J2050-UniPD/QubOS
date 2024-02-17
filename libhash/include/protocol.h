@@ -39,8 +39,8 @@ enum Mode { ENCRYPT = 1, DECRYPT = -1 };
 void vigener(TextBuffer *msg, const TextBuffer *key, enum Mode mode);
 
 // Hashing
-uint32_t djb2(Rope *str);
-uint16_t sysv(uint32_t somma);
+void hash(Packet *, const TextBuffer *);
+int validate(const Packet *, const TextBuffer *);
 
 // Secrets
 const TextBuffer *getUnipdSig();
