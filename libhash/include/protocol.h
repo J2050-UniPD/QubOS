@@ -4,22 +4,21 @@
 typedef unsigned int uint;
 
 #define TXTLEN 256 // Max size of a message sent from ground
-#define CNTLEN 242 // message - 4 hashcode - 1 space - 8 timestamp - 1 space
-
-typedef struct {
-  uint hashcode : 16;
-  uint timestamp : 32;
-  char content[CNTLEN];
-} Packet;
 
 typedef struct {
   char message[TXTLEN];
 } TextBuffer;
 
+typedef struct {
+  uint hashcode : 16;
+  uint timestamp : 32;
+  TextBuffer content;
+} Packet;
+
 // Dynamic String allocation
 typedef struct Rope Rope;
 struct Rope {
-  TextBuffer *str;
+  const TextBuffer *str;
   Rope *next;
 };
 
