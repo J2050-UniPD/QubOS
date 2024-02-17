@@ -2,34 +2,34 @@
 
 typedef union {
   struct {
-    uint u16l : 16;
-    uint u16m : 16;
+    uint u16bl : 16;
+    uint u16bm : 16;
   };
-  uint u32i : 32;
+  uint u32b : 32;
 } SysvNumber;
 
 SysvNumber djb2(Rope *str) {
-  SysvNumber digest = { .u32i = 5381};
+  SysvNumber digest = { .u32b = 5381};
   for (RopeIterator i = RopeIt_begin(str); RopeIt_hasNext(&i); RopeIt_next(&i)) {
-    digest.u32i = (digest.u32i * 33) + RopeIt_get(&i);
+    digest.u32b = (digest.u32b * 33) + RopeIt_get(&i);
   }
   return digest;
 }
 
 SysvNumber sysv(SysvNumber digest) {
-  digest.u16l += digest.u16m;
-  digest.u16l += digest.u16m;
+  digest.u16bl += digest.u16bm;
+  digest.u16bl += digest.u16bm;
   return digest;
 }
 
 void hash(Packet *pkg, const TextBuffer *sig) {
   Rope sigRope = {.str = sig, .next = (Rope *)0};
   Rope strRope = {.str = &(pkg->content), .next = &sigRope};
-  pkg->hashcode = sysv(djb2(&strRope)).u16l;
+  pkg->hashcode = sysv(djb2(&strRope)).u16bl;
 }
 
 int validate(const Packet *pkg, const TextBuffer *sig) {
   Rope sigRope = {.str = sig, .next = (Rope *)0};
   Rope strRope = {.str = &(pkg->content), .next = &sigRope};
-  return pkg->hashcode == sysv(djb2(&strRope)).u16l;
+  return pkg->hashcode == sysv(djb2(&strRope)).u16bl;
 }
