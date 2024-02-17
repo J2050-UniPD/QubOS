@@ -1,7 +1,5 @@
-#include <libcrypt.h>
 #include <protocol.h>
 #include <stdio.h>
-#include <string.h>
 
 size_t mod(int num, size_t div) {
   return num < 0 ? ((-num * div + num) % div) : (num % div);
@@ -20,13 +18,15 @@ size_t indexOf(char c) {
 }
 
 #define ALPHALEN 63
-void vigener(Message *msg, char *key, enum Mode mode) {
-  static const char alphabet[ALPHALEN] =
-      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ";
-  size_t keylen = strlen(key), idx, offset;
-  for (size_t i = 0; i < MSGLEN && msg->message[i] != '\0'; i++) {
+
+// Preconditions:
+// - The key uses all 256 bytes allowed by the TextBuffer
+void vigener(TextBuffer *msg, const TextBuffer *key, enum Mode mode) {
+  static const char alphabet[ALPHALEN] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ";
+  size_t idx, offset;
+  for (size_t i = 0; i < TXTLEN && msg->message[i] != '\0'; i++) {
     idx = indexOf(msg->message[i]);
-    offset = mode * indexOf(key[mod(i, keylen)]);
+    offset = mode * indexOf(key->message[i]);
     msg->message[i] = alphabet[mod(idx + offset, ALPHALEN)];
   }
 }
