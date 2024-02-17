@@ -4,17 +4,22 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <Rope.h>
 #include <protocol.h>
-#include <libcrypt.h>
-#include <libhash.h>
-
-char *getUnipdSig();
 
 void print_rope(Rope *rope) {
-  for (RopeIterator i = begin(rope); hasNext(&i); next(&i)) {
-    printf("%c", get(&i));
+  for (RopeIterator i = RopeIt_begin(rope); RopeIt_hasNext(&i); RopeIt_next(&i)) {
+    printf("%c", RopeIt_get(&i));
   }
+}
+
+void print_textbuffer(TextBuffer * txt){
+  printf("TextBuffer{ '%256s' }",txt->message);
+}
+
+void print_packet(Packet * pkg){
+  printf("Packet{ %8x, %8x,",pkg->hashcode,pkg->timestamp);
+  print_textbuffer(&pkg->content);
+  printf(" }");
 }
 
 void test(char *line) {
@@ -124,32 +129,8 @@ void vigener_test() {
 }
 
 int main(int argc, char **argv) {
-  vigener_test();
-  return 0;
-  fast_test();
-  return 0;
-  char msg[256];
 
-  if (argc >= 2 && strcmp(argv[1], "-s") == 0) {
-    printf("Type message to be prepared: ");
-    scanf("%255[^\n]", msg);
-    Rope unipdsig = newRope(getUnipdSig(), NULL);
-    Rope str = newRope(msg, &unipdsig);
-    uint16_t digest = sysv(djb2(&str));
-    printf("'%4x %s'\n", digest, msg);
-  }
 
-  if (argc >= 2 && strcmp(argv[1], "-r") == 0) {
-    printf("Type message to be verified: ");
-    scanf("%255[^\n]", msg);
-    printf("'%s'\n", msg);
-    bool a = verify(msg);
-    if (a) {
-      printf("Messaggio accettato\n");
-    } else {
-      printf("Messaggio rifiutato\n");
-    }
-  }
 
   return 0;
 }
