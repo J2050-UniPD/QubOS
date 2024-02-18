@@ -1,4 +1,8 @@
+#include <protocol.h>
 
-char *getUnipdSig() {
-  return "##UNIPD_SIGNATURE_RSA#VNNAJSFBAJKCSANDJVNDCODBCASUOBDUBDOVBHFDB##";
-}
+const TextBuffer *getUnipdSig() {
+  static const TextBuffer unipdsig = {
+      .message =
+          "##UNIPD_SIGNATURE_RSA#VNNAJSFBAJKCSANDJVNDCODBCASUOBDUBDOVBHFDB##"};
+  return &unipdsig;
+};

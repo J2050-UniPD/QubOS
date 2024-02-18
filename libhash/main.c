@@ -12,12 +12,12 @@ void print_rope(Rope *rope) {
   }
 }
 
-void print_textbuffer(TextBuffer * txt){
-  printf("TextBuffer{ '%256s' }",txt->message);
+void print_textbuffer(TextBuffer *txt) {
+  printf("TextBuffer{ '%s' }", txt->message);
 }
 
-void print_packet(Packet * pkg){
-  printf("Packet{ %8x, %8x,",pkg->hashcode,pkg->timestamp);
+void print_packet(Packet *pkg) {
+  printf("Packet{ %8x, %8x,", pkg->hashcode, pkg->timestamp);
   print_textbuffer(&pkg->content);
   printf(" }");
 }
