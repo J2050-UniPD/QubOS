@@ -86,6 +86,7 @@ int main(int argc, char **argv) {
     printf("unipd sig     : %d\n",validate(p, getUnipdSig()));
     printf("3rd party sig : %d\n",validate(p, getOtherSig()));
 
+    // TODO : add timestamp to 
     printf("HASHING\n");
     printf("BEFORE : ");
     print_packet(p);
@@ -94,6 +95,18 @@ int main(int argc, char **argv) {
     printf("AFTER  : ");
     print_packet(p);
     printf("\n");
+
+    // TODO
+    printf("PACKET TO TEXT\n");
+    print_packet(p);
+    printf("\n");
+    printf("TEXT TO PACKET\n");
+    Packet c = {.hashcode = 0, .timestamp = 0, .content = {.message = ""}};
+    print_packet(&c);
+    printf("\n");
+
+    // TODO
+    printf("ENCRYPTION\n");
 
     printf("\n");
     printf("\n");
