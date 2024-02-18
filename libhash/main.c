@@ -64,6 +64,7 @@ int main(int argc, char **argv) {
     Rope s = {.str = &(p->content), .next = &u};
     SysvNumber h = djb2(&s);
 
+    printf("DJB2\n");
     printf("CStr: %x '%s'\n",djb2_real(str),str);
     printf("Rope: %x '",h.u32b);
     print_rope(&s);
@@ -74,23 +75,3 @@ int main(int argc, char **argv) {
   }
   return 0;
 }
-
-void test_packets() {
-  for (int i = 0; i < 8; i++) {
-    Packet *p = &(pkgs[i]);
-    print_packet(p);
-    printf("\n");
-    continue;
-    print_packet(p);
-    printf("\n");
-    printf("is_valid : %d\n", validate(p, getUnipdSig()));
-    hash(p, getUnipdSig());
-    printf("%4x\n", p->hashcode);
-    print_packet(p);
-    printf("\n");
-    printf("is_valid %d\n", validate(p, getUnipdSig()));
-    printf("\n");
-    printf("\n");
-  }
-}
-
