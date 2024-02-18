@@ -27,7 +27,6 @@ typedef struct {
   uint idx;
 } RopeIterator;
 
-Rope newRope(TextBuffer *str, Rope *next);
 RopeIterator RopeIterator_begin(Rope *rope);
 char         RopeIterator_get(RopeIterator *i);
 int          RopeIterator_hasNext(RopeIterator *i);
