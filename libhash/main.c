@@ -82,6 +82,10 @@ int main(int argc, char **argv) {
     printf("Real: %x -> %x\n",djb2_real(str), sysv_real(djb2_real(str)));
     printf("Unio: %x -> %x\n",h.u32b,sysv(h).u16bl);
 
+    printf("VALIDATION\n");
+    printf("unipd sig     : %d\n",validate(p, getUnipdSig()));
+    printf("3rd party sig : %d\n",validate(p, getOtherSig()));
+
     printf("\n");
     printf("\n");
   }
