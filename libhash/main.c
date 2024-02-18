@@ -86,6 +86,15 @@ int main(int argc, char **argv) {
     printf("unipd sig     : %d\n",validate(p, getUnipdSig()));
     printf("3rd party sig : %d\n",validate(p, getOtherSig()));
 
+    printf("HASHING\n");
+    printf("BEFORE : ");
+    print_packet(p);
+    printf("\n");
+    hash(p, getUnipdSig());
+    printf("AFTER  : ");
+    print_packet(p);
+    printf("\n");
+
     printf("\n");
     printf("\n");
   }
