@@ -42,14 +42,6 @@ typedef union {
 } SysvNumber;
 
 SysvNumber djb2(Rope *str);
-void test_djb2_rope();
-void test_packets();
-
-int main(int argc, char **argv) {
-  test_djb2_rope();
-  // test_packets();
-  return 0;
-}
 
 unsigned int djb2_real(char *str) {
   unsigned int hash = 5381;
@@ -60,10 +52,10 @@ unsigned int djb2_real(char *str) {
   return hash;
 }
 
-void test_djb2_rope() {
+int main(int argc, char **argv) {
   for (int i = 0; i < 8; i++) {
     Packet *p = &(pkgs[i]);
-    char *str = malloc(sizeof(char) * 512);
+    char str[512];
     sprintf(str, "%s%s%c", p->content.message, getUnipdSig()->message, '\0');
     print_packet(p);
     printf("\n");
@@ -80,10 +72,10 @@ void test_djb2_rope() {
     printf("\n");
     printf("\n");
   }
+  return 0;
 }
 
 void test_packets() {
-
   for (int i = 0; i < 8; i++) {
     Packet *p = &(pkgs[i]);
     print_packet(p);
