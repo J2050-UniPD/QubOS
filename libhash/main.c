@@ -23,14 +23,14 @@ void print_packet(Packet *pkg) {
 }
 
 Packet pkgs[8] = {
-    {.hashcode = 0x60d9, .content = {.message = "andakjsnfkedjnfskdgjnsdfks"}},
-    {.hashcode = 0x6940, .content = {.message = "AAAAAAAAAAAAAAAAAAAAaa"}},
-    {.hashcode = 0xff08, .content = {.message = "eeeeeeeeee"}},
-    {.hashcode = 0x879a, .content = {.message = "eeeeeeeeef"}},
-    {.hashcode = 0xcce1, .content = {.message = "eeefeeeeee"}},
-    {.hashcode = 0x4450, .content = {.message = "eeefeeeeed"}},
-    {.hashcode = 0xb9c0, .content = {.message = "eeedeeeeef"}},
-    {.hashcode = 0xd8e1, .content = {.message = "a b c d e"}},
+    {.hashcode = 0x60d9, .timestamp = 0, .content = {.message = "andakjsnfkedjnfskdgjnsdfks"}},
+    {.hashcode = 0x6940, .timestamp = 0, .content = {.message = "AAAAAAAAAAAAAAAAAAAAaa"}},
+    {.hashcode = 0xff08, .timestamp = 0, .content = {.message = "eeeeeeeeee"}},
+    {.hashcode = 0x879a, .timestamp = 0, .content = {.message = "eeeeeeeeef"}},
+    {.hashcode = 0xcce1, .timestamp = 0, .content = {.message = "eeefeeeeee"}},
+    {.hashcode = 0x4450, .timestamp = 0, .content = {.message = "eeefeeeeed"}},
+    {.hashcode = 0xb9c0, .timestamp = 0, .content = {.message = "eeedeeeeef"}},
+    {.hashcode = 0xd8e1, .timestamp = 0, .content = {.message = "a b c d e"}},
 };
 
 typedef union {
