@@ -17,8 +17,8 @@ SysvNumber djb2(Rope *str) {
 }
 
 SysvNumber sysv(SysvNumber digest) {
-  digest.u16bl += digest.u16bm;
-  digest.u16bl += digest.u16bm;
+  digest.u32b  = digest.u16bl + digest.u16bm;
+  digest.u16bl = digest.u16bl + digest.u16bm;
   return digest;
 }
 

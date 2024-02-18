@@ -42,6 +42,7 @@ typedef union {
 } SysvNumber;
 
 SysvNumber djb2(Rope *str);
+SysvNumber sysv(SysvNumber);
 
 unsigned int djb2_real(char *str) {
   unsigned int hash = 5381;
@@ -50,6 +51,13 @@ unsigned int djb2_real(char *str) {
     hash = hash * 33 + c;
   }
   return hash;
+}
+
+unsigned short sysv_real(unsigned int sum){
+  const int a = 65536;
+  const long b = 4294967295;
+  unsigned int r = (sum % a) + ((sum % b) / a);
+  return (r % a) + (r / a);
 }
 
 int main(int argc, char **argv) {
@@ -69,6 +77,10 @@ int main(int argc, char **argv) {
     printf("Rope: %x '",h.u32b);
     print_rope(&s);
     printf("'\n");
+
+    printf("SYSV\n");
+    printf("Real: %x -> %x\n",djb2_real(str), sysv_real(djb2_real(str)));
+    printf("Unio: %x -> %x\n",h.u32b,sysv(h).u16bl);
 
     printf("\n");
     printf("\n");
