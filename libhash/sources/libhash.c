@@ -1,4 +1,5 @@
 #include <protocol.h>
+#include <stdio.h>
 
 typedef union {
   struct {
@@ -9,7 +10,7 @@ typedef union {
 } SysvNumber;
 
 SysvNumber djb2(Rope *str) {
-  SysvNumber digest = { .u32b = 5381};
+  SysvNumber digest = {.u32b = 5381};
   for (RopeIterator i = RopeIterator_begin(str); RopeIterator_hasNext(&i); RopeIterator_next(&i)) {
     digest.u32b = (digest.u32b * 33) + RopeIterator_get(&i);
   }
@@ -17,15 +18,18 @@ SysvNumber djb2(Rope *str) {
 }
 
 SysvNumber sysv(SysvNumber digest) {
-  digest.u32b  = digest.u16bl + digest.u16bm;
+  digest.u32b = digest.u16bl + digest.u16bm;
   digest.u16bl = digest.u16bl + digest.u16bm;
   return digest;
 }
 
 void hash(Packet *pkg, const TextBuffer *sig) {
+  static TextBuffer timestampText;
+  sprintf(timestampText.message, "%8x%c", pkg->timestamp, '\0');
   Rope sigRope = {.str = sig, .next = (Rope *)0};
   Rope strRope = {.str = &(pkg->content), .next = &sigRope};
-  pkg->hashcode = sysv(djb2(&strRope)).u16bl;
+  Rope timestamp = {.str = &timestampText, .next = &strRope};
+  pkg->hashcode = sysv(djb2(&timestamp)).u16bl;
 }
 
 int validate(const Packet *pkg, const TextBuffer *sig) {
