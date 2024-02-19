@@ -63,71 +63,68 @@ int main(int argc, char **argv) {
     Packet p = {.hashcode = 0, .timestamp = i * 16, .content = msgs[i]};
 
     printf("\n");
-    printf("===============================================================================================================\n");
+    printf("=======================================================================================================\n");
     printf("GROUND STATION\n");
-    printf("===============================================================================================================\n");
     printf("\n");
 
-    printf("Hashing\n");
-    printf("Original packet\n");
+    printf("Text to send\n");
+    print_textbuffer(&msgs[i]);
+    printf("\n");
+    printf("\n");
+
+    printf("Packaging\n");
     print_packet(&p);
     printf("\n");
+    printf("\n");
+
     hash(&p, getUnipdSig());
-    printf("Hashed packet\n");
+    printf("Hashing\n");
     print_packet(&p);
     printf("\n");
-
     printf("\n");
+
     printf("Converting packet to text\n");
     TextBuffer toSend;
     parsePacketToText(&p, &toSend);
-    print_packet(&p);
-    printf("\n");
     print_textbuffer(&toSend);
     printf("\n");
-
     printf("\n");
+
     printf("Encryption\n");
     vigener(&toSend, getUnipdKey(), ENCRYPT);
     print_textbuffer(&toSend);
     printf("\n");
-
     printf("\n");
+
     printf("\n");
     printf("Transmission\n");
     printf("\n");
 
     printf("\n");
     printf("SATELLITE\n");
-
     printf("\n");
+
     printf("Received text\n");
     print_textbuffer(&toSend);
     printf("\n");
+    printf("\n");
+
     printf("Decryption\n");
     vigener(&toSend, getUnipdKey(), DECRYPT);
     print_textbuffer(&toSend);
     printf("\n");
+    printf("\n");
 
-    printf("\n");
     printf("Converting text to packet\n");
-    print_textbuffer(&toSend);
-    printf("\n");
-    Packet recv;
+    Packet recv = {.hashcode = 0, .timestamp = 0, .content = {.message = ""}};
     parseTextToPacket(&toSend, &recv);
     print_packet(&p);
     printf("\n");
+    printf("\n");
 
     printf("Hash Validation\n");
-    printf("Received packet\n");
-    print_packet(&p);
-    printf("\n");
     int isValid = validate(&p, getUnipdSig());
-    if (isValid) {
-      printf("Packet is valid\n");
-    } else {
-      printf("Packet was discarded\n");
-    }
+    printf("Packet is %s valid and has been %s.\n", isValid ? "" : "NOT", isValid ? "ACCEPTED" : "DISCARDED");
 
     printf("\n");
   }
