@@ -23,17 +23,15 @@ SysvNumber sysv(SysvNumber digest) {
   return digest;
 }
 
-void hash(Packet *pkg, const TextBuffer *sig) {
+SysvNumber calculateHash(const Packet *pkg, const TextBuffer *sig) {
   static TextBuffer timestampText;
   sprintf(timestampText.message, "%08x%c", pkg->timestamp, '\0');
   Rope sigRope = {.str = sig, .next = (Rope *)0};
   Rope strRope = {.str = &(pkg->content), .next = &sigRope};
   Rope timestamp = {.str = &timestampText, .next = &strRope};
-  pkg->hashcode = sysv(djb2(&timestamp)).u16bl;
+  return sysv(djb2(&timestamp));
 }
 
-int validate(const Packet *pkg, const TextBuffer *sig) {
-  Rope sigRope = {.str = sig, .next = (Rope *)0};
-  Rope strRope = {.str = &(pkg->content), .next = &sigRope};
-  return pkg->hashcode == sysv(djb2(&strRope)).u16bl;
-}
+void hash(Packet *pkg, const TextBuffer *sig) { pkg->hashcode = calculateHash(pkg, sig).u16bl; }
+
+int validate(const Packet *pkg, const TextBuffer *sig) { return pkg->hashcode == calculateHash(pkg, sig).u16bl; }
