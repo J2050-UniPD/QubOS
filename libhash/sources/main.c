@@ -62,18 +62,21 @@ int main(int argc, char **argv) {
   for (int i = 0; i < 8; i++) {
     Packet *p = &(pkgs[i]);
     char str[512];
-    sprintf(str, "%s%s%c", p->content.message, getUnipdSig()->message, '\0');
+    sprintf(str, "%08x%s%s%c", p->timestamp, p->content.message, getUnipdSig()->message, '\0');
     print_packet(p);
     printf("\n");
-    hash(p, getUnipdSig());
+    // hash(p, getUnipdSig());
     Rope u = {.str = getUnipdSig(), .next = NULL};
     Rope s = {.str = &(p->content), .next = &u};
-    SysvNumber h = djb2(&s);
+    TextBuffer tm;
+    sprintf(tm.message,"%08x", p->timestamp);
+    Rope t = {.str = &tm, .next = &s};
+    SysvNumber h = djb2(&t);
 
     printf("DJB2\n");
     printf("CStr: %x '%s'\n", djb2_real(str), str);
     printf("Rope: %x '", h.u32b);
-    print_rope(&s);
+    print_rope(&t);
     printf("'\n");
 
     printf("SYSV\n");
@@ -84,7 +87,6 @@ int main(int argc, char **argv) {
     printf("unipd sig     : %d\n", validate(p, getUnipdSig()));
     printf("3rd party sig : %d\n", validate(p, getOtherSig()));
 
-    // TODO : add timestamp to
     printf("HASHING\n");
     printf("BEFORE : ");
     print_packet(p);

@@ -25,7 +25,7 @@ SysvNumber sysv(SysvNumber digest) {
 
 void hash(Packet *pkg, const TextBuffer *sig) {
   static TextBuffer timestampText;
-  sprintf(timestampText.message, "%8x%c", pkg->timestamp, '\0');
+  sprintf(timestampText.message, "%08x%c", pkg->timestamp, '\0');
   Rope sigRope = {.str = sig, .next = (Rope *)0};
   Rope strRope = {.str = &(pkg->content), .next = &sigRope};
   Rope timestamp = {.str = &timestampText, .next = &strRope};
