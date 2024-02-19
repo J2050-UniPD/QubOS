@@ -2,7 +2,7 @@
 *This is J2050's on-board software (QubOS) source code repository and wiki.*
 ## 
 ### What is J2050?
-<img src="../imgs/QubOS-J2050logo.jpg" alt="J2050 logo" width="100"/></br>
+<img src="./imgs/QubOS-J2050logo.jpg" alt="J2050 logo" width="100"/></br>
 
 J2050 is an aerospace student project which is set to be the first student team from the University of Padova (UniPD) to launch a satellite (a 2P PocketQube named "RedPill") into orbit.
 Its main objective is to give the participating students a hands-on experience of a space mission and to help them apply what they studied during their courses to a real-life project.
