@@ -95,6 +95,9 @@ int main(int argc, char **argv) {
 
     printf("\n");
     printf("Transmission\n");
+    if (i == 7) {
+      toSend.message[0] = 'Z';
+    }
     printf("\n");
 
     printf("\n");
@@ -114,7 +117,9 @@ int main(int argc, char **argv) {
 
     printf("Converting text to packet\n");
     Packet recv = {.hashcode = 0, .timestamp = 0, .content = {.message = ""}};
-    parseTextToPacket(&toSend, &recv);
+    if (parseTextToPacket(&toSend, &recv)) {
+      printf("Error converting the text to packet\n");
+    }
     print_packet(&recv);
     printf("\n");
     printf("\n");
