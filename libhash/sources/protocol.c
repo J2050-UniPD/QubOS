@@ -10,5 +10,5 @@ int parseTextToPacket(TextBuffer *msg, Packet *packet) {
   errcode = sscanf(msg->message, "%04x %8x %242[a-zA-Z0-9 ]s", &hashcode, &timestamp, packet->content.message);
   packet->hashcode = hashcode;
   packet->timestamp = timestamp;
-  return errcode > 0;
+  return errcode == 3;
 }
