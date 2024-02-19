@@ -15,6 +15,10 @@ typedef struct {
   TextBuffer content;
 } Packet;
 
+// parsing
+void parsePacketToText(Packet * packet, TextBuffer * msg);
+void parseTextToPacket(TextBuffer * msg, Packet * packet);
+
 // Dynamic String allocation
 typedef struct Rope Rope;
 struct Rope {
