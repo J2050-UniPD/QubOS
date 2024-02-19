@@ -1,8 +1,5 @@
 #include <stdbool.h>
-#include <stdint.h>
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 #include <protocol.h>
 
@@ -118,12 +115,12 @@ int main(int argc, char **argv) {
     printf("Converting text to packet\n");
     Packet recv = {.hashcode = 0, .timestamp = 0, .content = {.message = ""}};
     parseTextToPacket(&toSend, &recv);
-    print_packet(&p);
+    print_packet(&recv);
     printf("\n");
     printf("\n");
 
     printf("Hash Validation\n");
-    int isValid = validate(&p, getUnipdSig());
+    int isValid = validate(&recv, getUnipdSig());
     printf("Packet is %s valid and has been %s.\n", isValid ? "" : "NOT", isValid ? "ACCEPTED" : "DISCARDED");
 
     printf("\n");
