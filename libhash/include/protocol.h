@@ -11,6 +11,20 @@ typedef struct {
 // Max size of a message sent from ground
 #define TXTLEN 256
 
+typedef union {
+  struct {
+    byte buffer[TXTLEN];
+  };
+  struct {
+    uint hashcode : 32;
+    uint timestamp : 32;
+    byte load[TXTLEN - 8];
+  };
+} Message;
+
+//
+// might delete later
+//
 typedef struct {
   byte buffer[TXTLEN];
 } ByteBuffer;
@@ -18,8 +32,9 @@ typedef struct {
 typedef struct {
   uint hashcode : 32;
   uint timestamp : 32;
-  ByteBuffer * load;
+  ByteBuffer *load;
 } Packet;
+
 
 // Dynamic String allocation
 typedef struct Rope Rope;
