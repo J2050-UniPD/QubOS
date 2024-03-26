@@ -5,7 +5,7 @@ typedef unsigned int uint;
 
 // byte is strictly 8 bits
 typedef struct {
-  uint value : 8;
+  unsigned char value : 8;
 } byte;
 
 // Max size of a message sent from ground
