@@ -20,7 +20,7 @@ typedef union {
 
 // Encryption
 enum Mode { ENCRYPT = 1, DECRYPT = -1 };
-void vigener(Message *msg, const Message *key, enum Mode mode);
+void vigenere(Message *msg, const Message *key, enum Mode mode);
 
 // Hashing
 void hash(Message *, const Message *);

@@ -87,11 +87,11 @@ int main(int argc, char **argv) {
   m.load[6]= 0;
 
   printf("\n\nENCRYPTION\n");
-  vigener(&m, &k, ENCRYPT);
+  vigenere(&m, &k, ENCRYPT);
   print_m(&m);
 
   printf("\n\nDECRYPTION\n");
-  vigener(&m, &k, DECRYPT);
+  vigenere(&m, &k, DECRYPT);
   print_m(&m);
   printf("\n\nVALIDATE: %d\n", validate(&m, &s));
   return 0;
