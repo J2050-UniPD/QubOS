@@ -2,10 +2,11 @@
 #define PROTOCOL
 
 typedef unsigned int uint;
+typedef unsigned char uchar;
 
 // byte is strictly 8 bits
 typedef struct {
-  unsigned char value : 8;
+  uchar value : 8;
 } byte;
 
 // Max size of a message sent from ground
