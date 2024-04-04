@@ -6,10 +6,6 @@ add_executable(
   sources/main.c
   sources/libcrypt.c
   sources/libhash.c
-  ##sources/hashing_test.c
-  #sources/simulation_test.c
   #sources/endian-test.c
-  #sources/protocol.c
-  #sources/Rope.c
   #sources/secrets.c
 )
