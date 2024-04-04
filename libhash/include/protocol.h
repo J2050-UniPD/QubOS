@@ -1,12 +1,12 @@
 #ifndef PROTOCOL
 #define PROTOCOL
 
-typedef unsigned int uint;
-typedef unsigned char uchar;
+typedef unsigned int u32;
+typedef unsigned char u8;
 
 // byte is strictly 8 bits
 typedef struct {
-  uchar value : 8;
+  u8 value : 8;
 } byte;
 
 // Max size of a message sent from ground
@@ -17,8 +17,8 @@ typedef union {
     byte buffer[TXTLEN];
   };
   struct {
-    uint hashcode : 32;
-    uint timestamp : 32;
+    u32 hashcode : 32;
+    u32 timestamp : 32;
     byte load[TXTLEN - 8];
   };
 } Message;
