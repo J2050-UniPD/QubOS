@@ -12,8 +12,8 @@ typedef union {
     u8 buffer[TXTLEN];
   };
   struct {
-    u32 hashcode : 32;
-    u32 timestamp : 32;
+    u32 hash : 32;
+    u32 time : 32;
     u8 load[TXTLEN - 8];
   };
 } Message;
