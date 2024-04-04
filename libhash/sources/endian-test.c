@@ -1,5 +1,4 @@
 #include <protocol.h>
-#include <stdio.h>
 
 uint assert(Message * m){
   int load = 0;
@@ -16,17 +15,13 @@ uint assert(Message * m){
   ;
 }
 
-void p(int bool, char * msg){
-  printf("[%s] :: %s \n", bool ? "OK" : "ER", msg);
-}
-
-int main(int argc, char **argv) {
+void test_endianness(void) {
   Message m = {};
   m.hashcode = 0x87654321;
   m.timestamp = 0x01020304;
   for(int i = 0; i + 8 < TXTLEN; m.load[i++].value = 0);
 
-  int assertGen, assertHash, assertTime, assertBuff;
+  uint assertGen, assertHash, assertTime, assertBuff;
   assertGen  = assert(&m);
 
   m.hashcode = 0x1312141;
@@ -46,8 +41,14 @@ int main(int argc, char **argv) {
   m.buffer[16+7].value = 0+37;
   assertBuff = assert(&m);
 
-  p(assertGen  == 256, "generazione");
-  p(assertHash == 256, "modifica hashcode");
-  p(assertTime == 256, "modifica hashcode");
-  p(assertBuff == 256, "modifica hashcode");
+  if(
+    assertGen  == 256 &&
+    assertHash == 256 &&
+    assertTime == 256 &&
+    assertBuff == 256 
+  ){
+    // fai blinkare il led verde
+  }else{
+    // fai blinkare il led rosso
+  }
 }
