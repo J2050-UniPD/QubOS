@@ -31,6 +31,14 @@ void vigener(Message *msg, const Message *key, enum Mode mode);
 void hash(Message *, const Message *);
 int validate(const Message *, const Message *);
 
+// Secrets
+const Message *getUnipdSig();
+const Message *getUnipdKey();
+
+const Message *getOtherSig();
+const Message *getOtherKey();
+
+
 // might delete later
 // Dynamic String allocation
 typedef struct Rope Rope;
@@ -48,12 +56,5 @@ RopeIterator RopeIterator_begin(Rope *rope);
 char RopeIterator_get(RopeIterator *i);
 int RopeIterator_hasNext(RopeIterator *i);
 int RopeIterator_next(RopeIterator *i);
-
-// Secrets
-const ByteBuffer *getUnipdSig();
-const ByteBuffer *getUnipdKey();
-
-const ByteBuffer *getOtherSig();
-const ByteBuffer *getOtherKey();
 
 #endif // PROTOCOL
