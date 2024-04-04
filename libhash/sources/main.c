@@ -21,8 +21,8 @@ void print_m(Message *m) {
   print_buffersquare(m->buffer, sizeof(m->buffer));
   printf("\t}\n");
   printf("\tPacket {\n");
-  printf("\t\thashcode : %08X\n", m->hashcode);
-  printf("\t\ttimestamp: %08X\n", m->timestamp);
+  printf("\t\thashcode : %08X\n", m->hash);
+  printf("\t\ttimestamp: %08X\n", m->time);
   printf("\t\tload {");
   print_buffersquare(m->load, sizeof(m->load));
   printf("\t\t}\n");
@@ -32,8 +32,8 @@ void print_m(Message *m) {
 
 int main(int argc, char **argv) {
   Message m = {
-    .hashcode = 0x12345678,
-    .timestamp = 0xdeadbeef,
+    .hash = 0x12345678,
+    .time = 0xdeadbeef,
     .load = "AAAAAAAABBBBBBBBCCCCCCCCCCCCCCCC"};
   print_m(&m);
   return 0;
