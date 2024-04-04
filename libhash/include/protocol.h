@@ -4,22 +4,17 @@
 typedef unsigned int u32;
 typedef unsigned char u8;
 
-// byte is strictly 8 bits
-typedef struct {
-  u8 value : 8;
-} byte;
-
 // Max size of a message sent from ground
 #define TXTLEN 256
 
 typedef union {
   struct {
-    byte buffer[TXTLEN];
+    u8 buffer[TXTLEN];
   };
   struct {
     u32 hashcode : 32;
     u32 timestamp : 32;
-    byte load[TXTLEN - 8];
+    u8 load[TXTLEN - 8];
   };
 } Message;
 
