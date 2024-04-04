@@ -40,21 +40,22 @@ const Message *getOtherKey();
 
 
 // might delete later
+//
 // Dynamic String allocation
-typedef struct Rope Rope;
-struct Rope {
-  const ByteBuffer *str;
-  Rope *next;
-};
-
-typedef struct {
-  Rope *rope;
-  uint idx;
-} RopeIterator;
-
-RopeIterator RopeIterator_begin(Rope *rope);
-char RopeIterator_get(RopeIterator *i);
-int RopeIterator_hasNext(RopeIterator *i);
-int RopeIterator_next(RopeIterator *i);
+// typedef struct Rope Rope;
+// struct Rope {
+//   const ByteBuffer *str;
+//   Rope *next;
+// };
+// 
+// typedef struct {
+//   Rope *rope;
+//   uint idx;
+// } RopeIterator;
+// 
+// RopeIterator RopeIterator_begin(Rope *rope);
+// char RopeIterator_get(RopeIterator *i);
+// int RopeIterator_hasNext(RopeIterator *i);
+// int RopeIterator_next(RopeIterator *i);
 
 #endif // PROTOCOL
