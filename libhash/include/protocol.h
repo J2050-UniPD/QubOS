@@ -22,20 +22,6 @@ typedef union {
   };
 } Message;
 
-//
-// might delete later
-//
-typedef struct {
-  byte buffer[TXTLEN];
-} ByteBuffer;
-
-typedef struct {
-  uint hashcode : 32;
-  uint timestamp : 32;
-  ByteBuffer *load;
-} Packet;
-
-
 // Dynamic String allocation
 typedef struct Rope Rope;
 struct Rope {
