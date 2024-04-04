@@ -22,6 +22,14 @@ typedef union {
   };
 } Message;
 
+// Encryption
+enum Mode { ENCRYPT = 1, DECRYPT = -1 };
+void vigener(ByteBuffer *msg, const ByteBuffer *key, enum Mode mode);
+
+// Hashing
+void hash(Packet *, const ByteBuffer *);
+int validate(const Packet *, const ByteBuffer *);
+
 // Dynamic String allocation
 typedef struct Rope Rope;
 struct Rope {
@@ -38,14 +46,6 @@ RopeIterator RopeIterator_begin(Rope *rope);
 char RopeIterator_get(RopeIterator *i);
 int RopeIterator_hasNext(RopeIterator *i);
 int RopeIterator_next(RopeIterator *i);
-
-// Encryption
-enum Mode { ENCRYPT = 1, DECRYPT = -1 };
-void vigener(ByteBuffer *msg, const ByteBuffer *key, enum Mode mode);
-
-// Hashing
-void hash(Packet *, const ByteBuffer *);
-int validate(const Packet *, const ByteBuffer *);
 
 // Secrets
 const ByteBuffer *getUnipdSig();
