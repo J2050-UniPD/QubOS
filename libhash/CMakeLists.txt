@@ -5,7 +5,7 @@ add_executable(
   J2050_COMMS_TESTING 
   sources/main.c
   sources/libcrypt.c
-  #sources/libhash.c
+  sources/libhash.c
   ##sources/hashing_test.c
   #sources/simulation_test.c
   #sources/endian-test.c
