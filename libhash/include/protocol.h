@@ -25,12 +25,13 @@ typedef union {
 
 // Encryption
 enum Mode { ENCRYPT = 1, DECRYPT = -1 };
-void vigener(ByteBuffer *msg, const ByteBuffer *key, enum Mode mode);
+void vigener(Message *msg, const Message *key, enum Mode mode);
 
 // Hashing
-void hash(Packet *, const ByteBuffer *);
-int validate(const Packet *, const ByteBuffer *);
+void hash(Message *, const Message *);
+int validate(const Message *, const Message *);
 
+// might delete later
 // Dynamic String allocation
 typedef struct Rope Rope;
 struct Rope {
