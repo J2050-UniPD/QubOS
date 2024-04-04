@@ -24,7 +24,7 @@ void vigener(Message *msg, const Message *key, enum Mode mode);
 
 // Hashing
 void hash(Message *, const Message *);
-int validate(const Message *, const Message *);
+u32 validate(const Message *, const Message *);
 
 // Secrets
 const Message *getUnipdSig();
